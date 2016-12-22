@@ -1,0 +1,41 @@
+version: '2'
+
+services:
+
+  webx:
+    build: .
+    environment: 
+      - XDEBUG_CONFIG=remote_host={{your IP}}
+    ports:
+      - "80:80"
+    links:
+      - mariadb:db
+    volumes:
+      - .:/var/www/html:Z
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: {{your password}}
+    volumes:
+      - mariadb:/var/lib/mysql:Z
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8080:80
+    links:
+      - mariadb:db
+    depends_on:
+      - mariadb
+    volumes:
+      - mariadb:/var/lib/mysql:Z
+      - sessions:/sessions:Z
+    
+volumes:
+  mariadb:
+  sessions:
