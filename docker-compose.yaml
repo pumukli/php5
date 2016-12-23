@@ -11,7 +11,7 @@ services:
     links:
       - mariadb:db
     volumes:
-      - .:/var/www/html:Z
+      - .:/var/www/html
     depends_on:
       - mariadb
 
@@ -22,7 +22,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: {{your password}}
     volumes:
-      - mariadb:/var/lib/mysql:Z
+      - mariadb:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -33,8 +33,8 @@ services:
     depends_on:
       - mariadb
     volumes:
-      - mariadb:/var/lib/mysql:Z
-      - sessions:/sessions:Z
+      - mariadb:/var/lib/mysql
+      - sessions:/sessions
     
 volumes:
   mariadb:
